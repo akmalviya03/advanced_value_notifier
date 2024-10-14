@@ -1,30 +1,29 @@
-import 'package:advanced_value_notifier/src/notifier.dart';
-import 'package:flutter/widgets.dart';
+import 'package:advanced_value_notifier/src/notifiers/simple_notifier.dart';
+import 'package:flutter/material.dart';
 
-typedef HistoryValueWidgetBuilder<T> = Widget Function(
-    BuildContext context, T prevValue, T value, Widget? child);
+typedef HistoryValueWidgetListener<T> = void Function(T prev, T curr);
 
-class HistoryValueListenableBuilder<T> extends StatefulWidget {
-  const HistoryValueListenableBuilder({
+class HistoryValueListenableListener<T> extends StatefulWidget {
+  const HistoryValueListenableListener({
     super.key,
+    required this.historyValueWidgetListener,
     required this.historyValueNotifier,
-    required this.historyValueBuilder,
-    this.child,
+    required this.child,
   });
 
   final HistoryValueNotifier<T> historyValueNotifier;
 
-  final HistoryValueWidgetBuilder<T> historyValueBuilder;
+  final HistoryValueWidgetListener<T> historyValueWidgetListener;
 
-  final Widget? child;
+  final Widget child;
 
   @override
   State<StatefulWidget> createState() =>
-      _HistoryValueListenableBuilderState<T>();
+      _HistoryValueListenableListenerState<T>();
 }
 
-class _HistoryValueListenableBuilderState<T>
-    extends State<HistoryValueListenableBuilder<T>> {
+class _HistoryValueListenableListenerState<T>
+    extends State<HistoryValueListenableListener<T>> {
   late T value;
   late T prevValue;
 
@@ -37,7 +36,7 @@ class _HistoryValueListenableBuilderState<T>
   }
 
   @override
-  void didUpdateWidget(HistoryValueListenableBuilder<T> oldWidget) {
+  void didUpdateWidget(HistoryValueListenableListener<T> oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.historyValueNotifier != widget.historyValueNotifier) {
       oldWidget.historyValueNotifier.removeListener(_valueChanged);
@@ -54,14 +53,12 @@ class _HistoryValueListenableBuilderState<T>
   }
 
   void _valueChanged() {
-    setState(() {
-      value = widget.historyValueNotifier.value;
-      prevValue = widget.historyValueNotifier.prevValue;
-    });
+    widget.historyValueWidgetListener(widget.historyValueNotifier.prevValue,
+        widget.historyValueNotifier.value);
   }
 
   @override
   Widget build(BuildContext context) {
-    return widget.historyValueBuilder(context, prevValue, value, widget.child);
+    return widget.child;
   }
 }

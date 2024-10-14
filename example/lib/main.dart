@@ -27,6 +27,14 @@ class MyHomePage extends StatelessWidget {
   final String title;
 
   final HistoryValueNotifier<int> counter = HistoryValueNotifier(0);
+  final TransformerHistoryValueNotifier<int, int>
+      transformerHistoryValueNotifier =
+      TransformerHistoryValueNotifier<int, int>(
+    value: 0,
+    transformer: (value) {
+      return value % 2;
+    },
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +50,7 @@ class MyHomePage extends StatelessWidget {
             HistoryValueListenableListener<int>(
               historyValueNotifier: counter,
               historyValueWidgetListener: (int prevValue, int value) {
-                print("Prev $prevValue Curr $value");
+                debugPrint("Prev $prevValue Curr $value");
               },
               child: const Text(
                 'Hello',
@@ -58,12 +66,27 @@ class MyHomePage extends StatelessWidget {
                 );
               },
             ),
+            TransformedHistoryValueListenableBuilder<int, int>(
+              historyValueNotifier: transformerHistoryValueNotifier,
+              historyValueBuilder: (BuildContext context,
+                  int? prevValue,
+                  int? prevTransformedValue,
+                  int value,
+                  int? transformedValue,
+                  Widget? child) {
+                return Text(
+                  "Prev $prevValue PrevTransformed $prevTransformedValue Curr $value Transformed $transformedValue",
+                  style: Theme.of(context).textTheme.headlineMedium,
+                );
+              },
+            ),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           counter.value++;
+          transformerHistoryValueNotifier.value++;
         },
         tooltip: 'Increment',
         child: const Icon(Icons.add),
