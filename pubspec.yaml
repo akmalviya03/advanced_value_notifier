@@ -1,0 +1,17 @@
+name: advanced_value_notifier
+description: "A value notifier which has super powers"
+version: 0.0.1
+homepage: https://github.com/akmalviya03/advanced_value_notifier.git
+
+environment:
+  sdk: ^3.5.3
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
