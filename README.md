@@ -20,6 +20,7 @@ This package allows you to notify listener about the previous value and current 
       ),
     )
 ```
+
 ### HistoryValueListenableBuilder
 ```dart
     HistoryValueListenableBuilder<int>(
@@ -32,6 +33,24 @@ This package allows you to notify listener about the previous value and current 
         );
       },
     )
+```
+
+### TransformerHistoryValueListenableBuilder
+```dart
+    TransformerHistoryValueListenableBuilder<int, int>(
+      transformerHistoryValueNotifier: transformerHistoryValueNotifier,
+      transformerHistoryValueBuilder: (BuildContext context,
+          int? prevValue,
+          int? prevTransformedValue,
+          int value,
+          int? transformedValue,
+          Widget? child) {
+        return Text(
+          "Prev $prevValue PrevTransformed $prevTransformedValue Curr $value Transformed $transformedValue",
+          style: Theme.of(context).textTheme.headlineMedium,
+        );
+      },
+    ),
 ```
 
 ## Additional information
