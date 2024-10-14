@@ -66,9 +66,9 @@ class MyHomePage extends StatelessWidget {
                 );
               },
             ),
-            TransformedHistoryValueListenableBuilder<int, int>(
-              historyValueNotifier: transformerHistoryValueNotifier,
-              historyValueBuilder: (BuildContext context,
+            TransformerHistoryValueListenableBuilder<int, int>(
+              transformerHistoryValueNotifier: transformerHistoryValueNotifier,
+              transformerHistoryValueBuilder: (BuildContext context,
                   int? prevValue,
                   int? prevTransformedValue,
                   int value,

@@ -10,27 +10,27 @@ typedef TransformerHistoryValueWidgetBuilder<T, U> = Widget Function(
   Widget? child,
 );
 
-class TransformedHistoryValueListenableBuilder<T, U> extends StatefulWidget {
-  const TransformedHistoryValueListenableBuilder({
+class TransformerHistoryValueListenableBuilder<T, U> extends StatefulWidget {
+  const TransformerHistoryValueListenableBuilder({
     super.key,
-    required this.historyValueNotifier,
-    required this.historyValueBuilder,
+    required this.transformerHistoryValueNotifier,
+    required this.transformerHistoryValueBuilder,
     this.child,
   });
 
-  final TransformerHistoryValueNotifier<T, U> historyValueNotifier;
+  final TransformerHistoryValueNotifier<T, U> transformerHistoryValueNotifier;
 
-  final TransformerHistoryValueWidgetBuilder<T, U> historyValueBuilder;
+  final TransformerHistoryValueWidgetBuilder<T, U> transformerHistoryValueBuilder;
 
   final Widget? child;
 
   @override
   State<StatefulWidget> createState() =>
-      _TransformedHistoryValueListenableBuilderState<T, U>();
+      _TransformerHistoryValueListenableBuilderState<T, U>();
 }
 
-class _TransformedHistoryValueListenableBuilderState<T, U>
-    extends State<TransformedHistoryValueListenableBuilder<T, U>> {
+class _TransformerHistoryValueListenableBuilderState<T, U>
+    extends State<TransformerHistoryValueListenableBuilder<T, U>> {
   late T value;
   late U transformedValue;
   T? prevValue;
@@ -39,43 +39,43 @@ class _TransformedHistoryValueListenableBuilderState<T, U>
   @override
   void initState() {
     super.initState();
-    value = widget.historyValueNotifier.value;
-    transformedValue = widget.historyValueNotifier.transformedValue;
-    widget.historyValueNotifier.addListener(_valueChanged);
+    value = widget.transformerHistoryValueNotifier.value;
+    transformedValue = widget.transformerHistoryValueNotifier.transformedValue;
+    widget.transformerHistoryValueNotifier.addListener(_valueChanged);
   }
 
   @override
   void didUpdateWidget(
-      TransformedHistoryValueListenableBuilder<T, U> oldWidget) {
+      TransformerHistoryValueListenableBuilder<T, U> oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.historyValueNotifier != widget.historyValueNotifier) {
-      oldWidget.historyValueNotifier.removeListener(_valueChanged);
-      value = widget.historyValueNotifier.value;
-      transformedValue = widget.historyValueNotifier.transformedValue;
-      prevValue = widget.historyValueNotifier.prevValue;
-      prevTransformedValue = widget.historyValueNotifier.prevTransformedValue;
-      widget.historyValueNotifier.addListener(_valueChanged);
+    if (oldWidget.transformerHistoryValueNotifier != widget.transformerHistoryValueNotifier) {
+      oldWidget.transformerHistoryValueNotifier.removeListener(_valueChanged);
+      value = widget.transformerHistoryValueNotifier.value;
+      transformedValue = widget.transformerHistoryValueNotifier.transformedValue;
+      prevValue = widget.transformerHistoryValueNotifier.prevValue;
+      prevTransformedValue = widget.transformerHistoryValueNotifier.prevTransformedValue;
+      widget.transformerHistoryValueNotifier.addListener(_valueChanged);
     }
   }
 
   @override
   void dispose() {
-    widget.historyValueNotifier.removeListener(_valueChanged);
+    widget.transformerHistoryValueNotifier.removeListener(_valueChanged);
     super.dispose();
   }
 
   void _valueChanged() {
     setState(() {
-      value = widget.historyValueNotifier.value;
-      prevValue = widget.historyValueNotifier.prevValue;
-      transformedValue = widget.historyValueNotifier.transformedValue;
-      prevTransformedValue = widget.historyValueNotifier.prevTransformedValue;
+      value = widget.transformerHistoryValueNotifier.value;
+      prevValue = widget.transformerHistoryValueNotifier.prevValue;
+      transformedValue = widget.transformerHistoryValueNotifier.transformedValue;
+      prevTransformedValue = widget.transformerHistoryValueNotifier.prevTransformedValue;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return widget.historyValueBuilder(
+    return widget.transformerHistoryValueBuilder(
       context,
       prevValue,
       prevTransformedValue,
