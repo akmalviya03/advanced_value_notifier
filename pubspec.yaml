@@ -1,7 +1,7 @@
 name: advanced_value_notifier
 description: "A value notifier which has super powers, 
 like allows to see past value along with the new"
-version: 0.0.2+1
+version: 0.0.2+2
 homepage: https://github.com/akmalviya03/advanced_value_notifier.git
 
 environment:
