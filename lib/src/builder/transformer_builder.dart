@@ -20,7 +20,8 @@ class TransformerHistoryValueListenableBuilder<T, U> extends StatefulWidget {
 
   final TransformerHistoryValueNotifier<T, U> transformerHistoryValueNotifier;
 
-  final TransformerHistoryValueWidgetBuilder<T, U> transformerHistoryValueBuilder;
+  final TransformerHistoryValueWidgetBuilder<T, U>
+      transformerHistoryValueBuilder;
 
   final Widget? child;
 
@@ -48,12 +49,15 @@ class _TransformerHistoryValueListenableBuilderState<T, U>
   void didUpdateWidget(
       TransformerHistoryValueListenableBuilder<T, U> oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.transformerHistoryValueNotifier != widget.transformerHistoryValueNotifier) {
+    if (oldWidget.transformerHistoryValueNotifier !=
+        widget.transformerHistoryValueNotifier) {
       oldWidget.transformerHistoryValueNotifier.removeListener(_valueChanged);
       value = widget.transformerHistoryValueNotifier.value;
-      transformedValue = widget.transformerHistoryValueNotifier.transformedValue;
+      transformedValue =
+          widget.transformerHistoryValueNotifier.transformedValue;
       prevValue = widget.transformerHistoryValueNotifier.prevValue;
-      prevTransformedValue = widget.transformerHistoryValueNotifier.prevTransformedValue;
+      prevTransformedValue =
+          widget.transformerHistoryValueNotifier.prevTransformedValue;
       widget.transformerHistoryValueNotifier.addListener(_valueChanged);
     }
   }
@@ -68,8 +72,10 @@ class _TransformerHistoryValueListenableBuilderState<T, U>
     setState(() {
       value = widget.transformerHistoryValueNotifier.value;
       prevValue = widget.transformerHistoryValueNotifier.prevValue;
-      transformedValue = widget.transformerHistoryValueNotifier.transformedValue;
-      prevTransformedValue = widget.transformerHistoryValueNotifier.prevTransformedValue;
+      transformedValue =
+          widget.transformerHistoryValueNotifier.transformedValue;
+      prevTransformedValue =
+          widget.transformerHistoryValueNotifier.prevTransformedValue;
     });
   }
 
