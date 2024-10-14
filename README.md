@@ -8,7 +8,7 @@ This package allows you to notify listener about the previous value and current 
 
 ## Usage
 
-# HistoryValueListenableListener
+### HistoryValueListenableListener
 ```dart
     HistoryValueListenableListener<int>(
       historyValueNotifier: counter,
@@ -20,7 +20,7 @@ This package allows you to notify listener about the previous value and current 
       ),
     )
 ```
-# HistoryValueListenableListener
+### HistoryValueListenableBuilder
 ```dart
     HistoryValueListenableBuilder<int>(
       historyValueNotifier: counter,
