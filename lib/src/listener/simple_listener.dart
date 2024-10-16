@@ -24,14 +24,9 @@ class HistoryValueListenableListener<T> extends StatefulWidget {
 
 class _HistoryValueListenableListenerState<T>
     extends State<HistoryValueListenableListener<T>> {
-  late T value;
-  late T prevValue;
-
   @override
   void initState() {
     super.initState();
-    value = widget.historyValueNotifier.value;
-    prevValue = widget.historyValueNotifier.prevValue;
     widget.historyValueNotifier.addListener(_valueChanged);
   }
 
@@ -40,8 +35,6 @@ class _HistoryValueListenableListenerState<T>
     super.didUpdateWidget(oldWidget);
     if (oldWidget.historyValueNotifier != widget.historyValueNotifier) {
       oldWidget.historyValueNotifier.removeListener(_valueChanged);
-      value = widget.historyValueNotifier.value;
-      prevValue = widget.historyValueNotifier.prevValue;
       widget.historyValueNotifier.addListener(_valueChanged);
     }
   }

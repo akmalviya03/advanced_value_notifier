@@ -1,4 +1,4 @@
-import 'package:advanced_value_notifier/src/notifiers/transformed_notifier.dart';
+import 'package:advanced_value_notifier/src/notifiers/transformer_notifier.dart';
 import 'package:flutter/widgets.dart';
 
 typedef TransformerHistoryValueWidgetBuilder<T, U> = Widget Function(

@@ -45,15 +45,24 @@ class MyHomePage extends StatelessWidget {
       ),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
             HistoryValueListenableListener<int>(
               historyValueNotifier: counter,
               historyValueWidgetListener: (int prevValue, int value) {
-                debugPrint("Prev $prevValue Curr $value");
+                ScaffoldMessenger.of(context).showMaterialBanner(MaterialBanner(
+                    content: Text("Simple Prev $prevValue Curr $value"),
+                    actions: [
+                      GestureDetector(
+                        child: const Text("Cancel"),
+                        onTap: () {
+                          ScaffoldMessenger.of(context).clearMaterialBanners();
+                        },
+                      )
+                    ]));
               },
               child: const Text(
-                'Hello',
+                'Simple Listener',
               ),
             ),
             HistoryValueListenableBuilder<int>(
@@ -62,7 +71,6 @@ class MyHomePage extends StatelessWidget {
                   int value, Widget? child) {
                 return Text(
                   "Prev $prevValue Curr $value",
-                  style: Theme.of(context).textTheme.headlineMedium,
                 );
               },
             ),
@@ -76,9 +84,27 @@ class MyHomePage extends StatelessWidget {
                   Widget? child) {
                 return Text(
                   "Prev $prevValue PrevTransformed $prevTransformedValue Curr $value Transformed $transformedValue",
-                  style: Theme.of(context).textTheme.headlineMedium,
                 );
               },
+            ),
+            TransformerHistoryValueListenableListener<int, int>(
+              transformerHistoryValueNotifier: transformerHistoryValueNotifier,
+              transformerHistoryValueWidgetListener: (
+                int? prevValue,
+                int? prevTransformedValue,
+                int value,
+                int? transformedValue,
+              ) {
+                ScaffoldMessenger.of(context).clearSnackBars();
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Text(
+                  "Prev $prevValue PrevTransformed $prevTransformedValue "
+                  "Curr $value Transformed $transformedValue",
+                )));
+              },
+              child: const Text(
+                "Transformer Listener",
+              ),
             ),
           ],
         ),

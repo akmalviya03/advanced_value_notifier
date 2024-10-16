@@ -13,10 +13,19 @@ This package allows you to notify listener about the previous value and current 
     HistoryValueListenableListener<int>(
       historyValueNotifier: counter,
       historyValueWidgetListener: (int prevValue, int value) {
-        print("Prev $prevValue Curr $value");
+        ScaffoldMessenger.of(context).showMaterialBanner(MaterialBanner(
+            content: Text("Simple Prev $prevValue Curr $value"),
+            actions: [
+              GestureDetector(
+                child: const Text("Cancel"),
+                onTap: () {
+                  ScaffoldMessenger.of(context).clearMaterialBanners();
+                },
+              )
+            ]));
       },
       child: const Text(
-        'Hello',
+        'Simple Listener',
       ),
     )
 ```
@@ -29,7 +38,6 @@ This package allows you to notify listener about the previous value and current 
           int value, Widget? child) {
         return Text(
           "Prev $prevValue Curr $value",
-          style: Theme.of(context).textTheme.headlineMedium,
         );
       },
     )
@@ -47,10 +55,32 @@ This package allows you to notify listener about the previous value and current 
           Widget? child) {
         return Text(
           "Prev $prevValue PrevTransformed $prevTransformedValue Curr $value Transformed $transformedValue",
-          style: Theme.of(context).textTheme.headlineMedium,
         );
       },
-    ),
+    )
+```
+
+### TransformerHistoryValueListenableListener
+```dart
+    TransformerHistoryValueListenableListener<int, int>(
+      transformerHistoryValueNotifier: transformerHistoryValueNotifier,
+      transformerHistoryValueWidgetListener: (
+        int? prevValue,
+        int? prevTransformedValue,
+        int value,
+        int? transformedValue,
+      ) {
+        ScaffoldMessenger.of(context).clearSnackBars();
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text(
+          "Prev $prevValue PrevTransformed $prevTransformedValue "
+          "Curr $value Transformed $transformedValue",
+        )));
+      },
+      child: const Text(
+        "Transformer Listener",
+      ),
+    )
 ```
 
 ## Additional information
