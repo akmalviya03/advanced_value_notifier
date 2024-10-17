@@ -35,6 +35,7 @@ class MyHomePage extends StatelessWidget {
       return value % 2;
     },
   );
+  final ValueNotifier<int> valueNotifier = ValueNotifier<int>(0);
 
   @override
   Widget build(BuildContext context) {
@@ -47,9 +48,35 @@ class MyHomePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
+            AdvancedValueListenableListener<int>(
+              valueListenable: valueNotifier,
+              listener: (value) {
+                print("Advanced Value listener $value");
+              },
+              listenWhen: (int value) {
+                if (value.isEven) {
+                  return true;
+                }
+                return false;
+              },
+              child: const Text("Advanced Value Listenable"),
+            ),
+            AdvancedValueListenableBuilder(
+              valueListenable: valueNotifier,
+              buildWhen: (int value) {
+                if (value.isEven) {
+                  return true;
+                }
+                return false;
+              },
+              builder: (BuildContext context, int value, Widget? child) {
+                return Text("$value");
+              },
+            ),
             HistoryValueListenableListener<int>(
-              historyValueNotifier: counter,
-              historyValueWidgetListener: (int prevValue, int value) {
+              historyValueListenable: counter,
+              historyValueListener: (int? prevValue, int value) {
+                ScaffoldMessenger.of(context).clearMaterialBanners();
                 ScaffoldMessenger.of(context).showMaterialBanner(MaterialBanner(
                     content: Text("Simple Prev $prevValue Curr $value"),
                     actions: [
@@ -66,8 +93,8 @@ class MyHomePage extends StatelessWidget {
               ),
             ),
             HistoryValueListenableBuilder<int>(
-              historyValueNotifier: counter,
-              historyValueBuilder: (BuildContext context, int prevValue,
+              historyValueListenable: counter,
+              historyValueBuilder: (BuildContext context, int? prevValue,
                   int value, Widget? child) {
                 return Text(
                   "Prev $prevValue Curr $value",
@@ -75,7 +102,8 @@ class MyHomePage extends StatelessWidget {
               },
             ),
             TransformerHistoryValueListenableBuilder<int, int>(
-              transformerHistoryValueNotifier: transformerHistoryValueNotifier,
+              transformerHistoryValueListenable:
+                  transformerHistoryValueNotifier,
               transformerHistoryValueBuilder: (BuildContext context,
                   int? prevValue,
                   int? prevTransformedValue,
@@ -88,8 +116,9 @@ class MyHomePage extends StatelessWidget {
               },
             ),
             TransformerHistoryValueListenableListener<int, int>(
-              transformerHistoryValueNotifier: transformerHistoryValueNotifier,
-              transformerHistoryValueWidgetListener: (
+              transformerHistoryValueListenable:
+                  transformerHistoryValueNotifier,
+              transformerHistoryValueListener: (
                 int? prevValue,
                 int? prevTransformedValue,
                 int value,
@@ -113,6 +142,7 @@ class MyHomePage extends StatelessWidget {
         onPressed: () {
           counter.value++;
           transformerHistoryValueNotifier.value++;
+          valueNotifier.value++;
         },
         tooltip: 'Increment',
         child: const Icon(Icons.add),

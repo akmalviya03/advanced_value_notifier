@@ -1,3 +1,12 @@
+## 0.0.4
+* Added `AdvancedValueListenableListener` and `AdvancedValueListenableBuilder`
+* Conditional listen or build using `listenWhen` and `buildWhen`
+
+### Breaking changes
+
+* Renamed property `HistoryValueWidgetListener` to `HistoryValueListener`
+* Renamed property `TransformerHistoryValueWidgetListener` to `TransformerHistoryValueListener`
+
 ## 0.0.3
 * Added `TransformerHistoryValueListenableListener`
 
