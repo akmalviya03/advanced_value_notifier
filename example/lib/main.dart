@@ -108,7 +108,7 @@ class MyHomePage extends StatelessWidget {
                   int? prevValue,
                   int? prevTransformedValue,
                   int value,
-                  int? transformedValue,
+                  int transformedValue,
                   Widget? child) {
                 return Text(
                   "Prev $prevValue PrevTransformed $prevTransformedValue Curr $value Transformed $transformedValue",
@@ -122,7 +122,7 @@ class MyHomePage extends StatelessWidget {
                 int? prevValue,
                 int? prevTransformedValue,
                 int value,
-                int? transformedValue,
+                int transformedValue,
               ) {
                 ScaffoldMessenger.of(context).clearSnackBars();
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(

@@ -1,18 +1,51 @@
-This package allows you to notify listener about the previous value and current value.
+Advanced value notifier package gives notifiers some extra capabilities.
 
 ## Features
-* Get both previous and current value
-* Listen to the value changes
-* Build widget optimally by consider previous and current value
-
+* Build specific UI part based on some condition using buildWhen
+* Listen to the specific value based on some condition listenWhen
+* Transform values in notifier
+* Optimally show data in UI by using previously available value and current value.
 
 ## Usage
+
+### AdvancedValueListenableListener
+```dart
+    AdvancedValueListenableListener<int>(
+      valueListenable: valueNotifier,
+      listener: (value) {
+        print("Advanced Value listener $value");
+      },
+      listenWhen: (int value) {
+        if (value.isEven) {
+          return true;
+        }
+        return false;
+      },
+      child: const Text("Advanced Value Listenable"),
+    ),
+```
+
+### AdvancedValueListenableBuilder
+```dart
+    AdvancedValueListenableBuilder(
+      valueListenable: valueNotifier,
+      buildWhen: (int value) {
+        if (value.isEven) {
+          return true;
+        }
+        return false;
+      },
+      builder: (BuildContext context, int value, Widget? child) {
+        return Text("$value");
+      },
+    ),
+```
 
 ### HistoryValueListenableListener
 ```dart
     HistoryValueListenableListener<int>(
-      historyValueNotifier: counter,
-      historyValueWidgetListener: (int prevValue, int value) {
+      historyValueListenable: counter,
+      historyValueWidgetListener: (int? prevValue, int value) {
         ScaffoldMessenger.of(context).showMaterialBanner(MaterialBanner(
             content: Text("Simple Prev $prevValue Curr $value"),
             actions: [
@@ -33,8 +66,8 @@ This package allows you to notify listener about the previous value and current 
 ### HistoryValueListenableBuilder
 ```dart
     HistoryValueListenableBuilder<int>(
-      historyValueNotifier: counter,
-      historyValueBuilder: (BuildContext context, int prevValue,
+      historyValueListenable: counter,
+      historyValueBuilder: (BuildContext context, int? prevValue,
           int value, Widget? child) {
         return Text(
           "Prev $prevValue Curr $value",
@@ -46,12 +79,12 @@ This package allows you to notify listener about the previous value and current 
 ### TransformerHistoryValueListenableBuilder
 ```dart
     TransformerHistoryValueListenableBuilder<int, int>(
-      transformerHistoryValueNotifier: transformerHistoryValueNotifier,
+      transformerHistoryValueListenable: transformerHistoryValueNotifier,
       transformerHistoryValueBuilder: (BuildContext context,
           int? prevValue,
           int? prevTransformedValue,
           int value,
-          int? transformedValue,
+          int transformedValue,
           Widget? child) {
         return Text(
           "Prev $prevValue PrevTransformed $prevTransformedValue Curr $value Transformed $transformedValue",
@@ -63,12 +96,12 @@ This package allows you to notify listener about the previous value and current 
 ### TransformerHistoryValueListenableListener
 ```dart
     TransformerHistoryValueListenableListener<int, int>(
-      transformerHistoryValueNotifier: transformerHistoryValueNotifier,
+      transformerHistoryValueListenable: transformerHistoryValueNotifier,
       transformerHistoryValueWidgetListener: (
         int? prevValue,
         int? prevTransformedValue,
         int value,
-        int? transformedValue,
+        int transformedValue,
       ) {
         ScaffoldMessenger.of(context).clearSnackBars();
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
